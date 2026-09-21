@@ -1,0 +1,12 @@
+/*
+ * Board-agnostic alias for the heartbeat LED.
+ *
+ * Any board that supports blinky defines the `led0` label (and alias), so
+ * pointing `app-led` at it keeps the application code board independent.
+ */
+
+/ {
+	aliases {
+		app-led = &led0;
+	};
+};

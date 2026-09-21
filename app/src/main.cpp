@@ -2,8 +2,8 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
-/* The devicetree node identifier for the "led0" alias. */
-#define LED_NODE DT_ALIAS(led0)
+/* The devicetree node identifier for the "app-led" alias (see app.overlay). */
+#define LED_NODE DT_ALIAS(app_led)
 
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED_NODE, gpios);
 
@@ -17,12 +17,14 @@ int main(void)
 
     if (gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE) < 0) return 0;
 
+    LOG_INF("Heartbeat period: %d ms", CONFIG_APP_HEARTBEAT_PERIOD_MS);
+
     while (1) {
         if (gpio_pin_toggle_dt(&led) < 0) return 0;
 
         led_state = !led_state;
         LOG_INF("LED state: %s", led_state ? "ON" : "OFF");
-        k_msleep(CONFIG_LED_BLINK_SLEEP_MS);
+        k_msleep(CONFIG_APP_HEARTBEAT_PERIOD_MS);
     }
     return 0;
 }

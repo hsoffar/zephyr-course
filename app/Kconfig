@@ -1,3 +1,15 @@
+menu "Application"
+
+config APP_HEARTBEAT_PERIOD_MS
+	int "Heartbeat LED period (ms)"
+	range 100 2000
+	default 500
+	help
+	  Time the heartbeat LED stays in each state, in milliseconds.
+
+endmenu
+
+
 menuconfig LED_SUBSYSTEM
 	bool "LED Subsystem"
 	default y
